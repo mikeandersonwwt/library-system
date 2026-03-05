@@ -4,6 +4,30 @@ A REST API for a fictional book library system built with Node.js, TypeScript, E
 
 ---
 
+## Screenshots
+
+> All screenshots taken locally with `npm run dev` running. Captured via Swagger UI at `http://localhost:3000/docs`.
+
+### Swagger UI — full overview
+![Swagger UI overview showing all endpoint groups](docs/screenshots/01-swagger-overview.png)
+
+### POST /auth/login — 200 with JWT token
+![Login endpoint returning a 200 response with a signed JWT token](docs/screenshots/02-login.png)
+
+### GET /books — 200 with relational book data
+![Books list endpoint returning 200 with nested author objects](docs/screenshots/03-books-list.png)
+
+### POST /books/:id/borrow — 201 with borrow record
+![Borrow endpoint returning 201 with borrowedAt and dueAt timestamps](docs/screenshots/04-borrow.png)
+
+### POST /books — 403 Forbidden (MEMBER attempting LIBRARIAN action)
+![Create book endpoint returning 403 FORBIDDEN for a MEMBER role user](docs/screenshots/05-rbac-forbidden.png)
+
+### POST /books/:id/borrow — 409 Conflict (no copies available)
+![Borrow endpoint returning 409 BOOK_UNAVAILABLE when all copies are checked out](docs/screenshots/06-borrow-409.png)
+
+---
+
 ## Tech Stack
 
 | Technology | Purpose |
@@ -59,14 +83,6 @@ Populates the database with 5 authors, 15 books, and 3 users.
 ```bash
 npm run seed
 ```
-
-**Seed credentials (all passwords: `password123`)**
-
-| Email | Role |
-|---|---|
-| `librarian@library.com` | LIBRARIAN |
-| `jane@example.com` | MEMBER |
-| `sam@example.com` | MEMBER |
 
 ---
 
@@ -125,28 +141,17 @@ curl http://localhost:3000/books \
 
 Tokens expire after **24 hours**. Re-run the login call to get a fresh one.
 
----
-
 ### Via Swagger UI
 
-1. Open `http://localhost:3000/docs`
-2. Expand `POST /auth/register` or `POST /auth/login` → click **Try it out**
-3. Fill in the fields, click **Execute**
-4. Copy the `token` from the response body
-5. Click **Authorize** (🔒) at the top of the page, paste the token, click **Authorize**
-6. All subsequent requests made from Swagger UI will include it automatically
+Open `http://localhost:3000/docs` in your browser.
 
----
+1. Expand `POST /auth/register` or `POST /auth/login` → click **Try it out**
+2. Fill in the fields, click **Execute**
+3. Copy the `token` from the response body
+4. Click **Authorize** (🔒) at the top of the page, paste the token, click **Authorize**
+5. All subsequent requests made from Swagger UI will include it automatically
 
-## API Documentation (Swagger UI)
-
-With the server running, open your browser to:
-
-```
-http://localhost:3000/docs
-```
-
-You will see the full interactive Swagger UI with all 20 endpoints organized by tag (Auth, Books, Authors, Users). Scroll to the bottom to browse all data model schemas.
+The full interactive UI lists all 20 endpoints organised by tag (Auth, Books, Authors, Users). Scroll to the bottom to browse all data model schemas.
 
 ---
 
@@ -243,4 +248,3 @@ library-system/
 ## Acknowledgements
 
 This repository was developed using Spec-Driven Development (SDD) — specifications, architecture, and data model were written and reviewed before any implementation code. AI coding tools assisted with planning, implementation, and documentation refinement.
-
